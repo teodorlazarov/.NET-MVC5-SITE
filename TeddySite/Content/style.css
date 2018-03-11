@@ -1,0 +1,102 @@
+body{
+    padding-top:50px;
+}
+
+.jumbotron img{
+    transition: all .5s;
+}
+
+.jumbotron img:hover{
+    transform: rotate(360deg) scale(1.3);
+}
+
+#about{
+    border: 1px solid #0095da;
+    border-radius: 5px;
+}
+
+.card-img-top{
+    max-width: 100%;
+    height: 200px;
+}
+
+.card-title{
+    text-align: center;
+}
+
+.btn{
+    background-color: white;
+    border: 1px solid #0095da;
+    color: #0095da;
+    font-weight: bold;
+    min-height: 40px;
+}
+
+.btn:hover{
+    background-color: #0095da;
+    color:white;
+}
+
+#inscomments{
+    padding: 10px;
+   
+    font-size: 20px;
+    font-weight: 500;
+    text-align: left;
+    border-bottom: 1px solid #0095da;
+    border-left: 1px solid #0095da;
+    border-right: 1px solid #0095da;
+    border-top: 1px solid #0095da;
+    border-radius: 8px;
+    color:#0095da;
+    box-shadow: 5px 5px 16px #888888;
+    word-wrap: break-word;
+}
+
+#inscomments h3{
+    text-indent: 50px;
+}
+
+.navbar-text{
+    min-width: 110px;
+}
+
+.login{
+    white-space:nowrap;
+}
+
+.login button{
+    background-color: #0095da;
+   
+    color: white;
+    font-weight: bold;
+    min-height: 50px;
+    min-height: 50px;
+}
+
+.login button:hover{
+    background-color: white;
+    color:#0095da;
+}
+
+#logoutForm a{
+    color: rgba(255,255,255,0.5);
+}
+
+.username{
+    color: rgba(255,255,255,0.5);
+}
+
+.loginspan{
+    color: rgba(255,255,255,0.5);
+}
+
+.username:hover{
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+}
+
+#logoutForm a:hover{
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+}
