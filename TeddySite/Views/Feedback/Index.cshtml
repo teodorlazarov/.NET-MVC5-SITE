@@ -13,11 +13,24 @@
     {
         <div class="col pt-4 pb-4">
             <div id="inscomments">
-                <p>@entry.Username posted on @entry.DateAdded.ToLongDateString() @entry.DateAdded.ToLongTimeString():</p>
-                <p>-@entry.Message</p>
-                @if (User.Identity.Name == entry.Username)
+
+                <!--<p>@entry.Username posted on @entry.DateAdded.ToLongDateString() @entry.DateAdded.ToLongTimeString():</p>
+                <p>-@entry.Message</p>-->
+
+                <h3>@Html.ActionLink((string)entry.Message, "Show" + "/" + (string)entry.Id.ToString())</h3>
+                <p>
+                    Posted by @Html.ActionLink((string)entry.Username, "Index" + "/" + (string)entry.Username) on @Html.ActionLink((string)entry.DateAdded.ToString(), "CommentsByDate", new { userDate = entry.DateAdded.ToString("dd-MM-yyyy") })
+
+                </p>
+
+
+                @if (!String.IsNullOrEmpty(User.Identity.Name))
                 {
-                    <a href="@Url.Action("Edit/"+ entry.Id,"Feedback")"><button type="submit" class="btn btn-primary">Edit me</button></a>
+                    if (entry.Username == User.Identity.Name.Substring(0, User.Identity.Name.IndexOf("@")))
+                    {
+                        <a href="@Url.Action("Edit/" + entry.Id, "Feedback")"><button type="submit" class="btn btn-primary">Edit me</button></a>
+                        @Html.ActionLink("Delete", "Delete", new { id = entry.Id})
+                    }
                 }
             </div>
         </div>

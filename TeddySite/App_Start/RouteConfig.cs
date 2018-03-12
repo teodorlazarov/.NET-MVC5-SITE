@@ -14,9 +14,15 @@ namespace TeddySite
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "CommentsByDate",
+                url: "Feedback/CommentsByDate/{userDate}",
+                defaults: new {controller = "Feedback", action = "CommentsByDate", userDate = UrlParameter.Optional}
+                );
+
+            routes.MapRoute(
                 name: "Comments",
                 url: "Feedback/Index/{Username}",
-                defaults: new { controller = "Feedback", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Feedback", action = "Index", Username = UrlParameter.Optional }
                 );
 
             routes.MapRoute(

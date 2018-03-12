@@ -37,7 +37,7 @@ namespace TeddySite.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                entry.Username = User.Identity.Name;
+                entry.Username = User.Identity.Name.Substring(0, User.Identity.Name.IndexOf("@"));
             }
             entry.DateAdded = DateTime.Now;
             _db.Entries.Add(entry);
@@ -48,7 +48,7 @@ namespace TeddySite.Controllers
         public ActionResult Edit(int id)
         {
             var entry = _db.Entries.Find(id);
-            if (User.Identity.Name == entry.Username)
+            if (User.Identity.Name.Substring(0, User.Identity.Name.IndexOf("@")) == entry.Username)
             {
                 return View(entry);
             }
@@ -64,5 +64,50 @@ namespace TeddySite.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public ActionResult CommentsByDate(string userDate)
+        {
+            DateTime myDate = new DateTime();
+            DateTime myUpToDate = new DateTime();
+            if (!string.IsNullOrEmpty(userDate))
+            {
+                myDate = DateTime.Parse(userDate.Replace("!", ":"));
+                myUpToDate = myDate.AddDays(1);
+            }
+            var entriesPerDate =
+                (from entry in _db.Entries
+                 where entry.DateAdded <= myUpToDate
+                 orderby entry.Username descending
+                 select entry).Take(20);
+            ViewBag.Entries = entriesPerDate.ToList();
+            return View();
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            var entry = _db.Entries.Find(id);
+            if(User.Identity.Name.Substring(0, User.Identity.Name.IndexOf("@")) == entry.Username)
+            {
+                return View(entry);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(TeddySite.Models.FeedbackEntry entry)
+        {
+            var editEntry = _db.Entries.Find(entry.Id);
+            if(User.Identity.Name.Substring(0, User.Identity.Name.IndexOf("@")) == editEntry.Username)
+            {
+                _db.Entries.Remove(editEntry);
+                _db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
     }
 }
