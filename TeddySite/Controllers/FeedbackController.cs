@@ -19,7 +19,7 @@ namespace TeddySite.Controllers
         {
             var mostRecentEntries =
             (from entry in _db.Entries
-             orderby entry.DateAdded descending, entry.FirstName
+             orderby entry.DateAdded descending, entry.Username
 
              select entry).Take(20);
 
@@ -37,8 +37,7 @@ namespace TeddySite.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                entry.FirstName = User.Identity.Name;
-                entry.LastName = "";
+                entry.Username = User.Identity.Name;
             }
             entry.DateAdded = DateTime.Now;
             _db.Entries.Add(entry);
@@ -49,7 +48,7 @@ namespace TeddySite.Controllers
         public ActionResult Edit(int id)
         {
             var entry = _db.Entries.Find(id);
-            if (User.Identity.Name == entry.FirstName)
+            if (User.Identity.Name == entry.Username)
             {
                 return View(entry);
             }

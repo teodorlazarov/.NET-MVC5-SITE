@@ -13,9 +13,9 @@
     {
         <div class="col pt-4 pb-4">
             <div id="inscomments">
-                <p>@entry.FirstName @entry.LastName posted on @entry.DateAdded.ToLongDateString() @entry.DateAdded.ToLongTimeString():</p>
+                <p>@entry.Username posted on @entry.DateAdded.ToLongDateString() @entry.DateAdded.ToLongTimeString():</p>
                 <p>-@entry.Message</p>
-                @if (User.Identity.Name == entry.FirstName)
+                @if (User.Identity.Name == entry.Username)
                 {
                     <a href="@Url.Action("Edit/"+ entry.Id,"Feedback")"><button type="submit" class="btn btn-primary">Edit me</button></a>
                 }
