@@ -21,8 +21,8 @@ namespace TeddySite
 
             routes.MapRoute(
                 name: "Comments",
-                url: "Feedback/Index/{Username}",
-                defaults: new { controller = "Feedback", action = "Index", Username = UrlParameter.Optional }
+                url: "Feedback/Comments/{userName}",
+                defaults: new { controller = "Feedback", action = "Comments", Username = UrlParameter.Optional }
                 );
 
             routes.MapRoute(

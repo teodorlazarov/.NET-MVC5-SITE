@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Comments";
+}
+
+<h2>Comments for user @ViewBag.UserName</h2>
+@foreach(var entry in ViewBag.Entries)
+{
+    <section class="contact">
+        <header>
+            <h3>@entry.Message</h3>
+        </header>
+        <p>
+            Posted on @entry.DateAdded.ToLongDateString()
+        </p>
+    </section>
+}
+

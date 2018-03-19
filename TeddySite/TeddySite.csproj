@@ -276,6 +276,8 @@
     <Content Include="Views\Feedback\Edit.cshtml" />
     <Content Include="Views\Feedback\CommentsByDate.cshtml" />
     <Content Include="Views\Feedback\Delete.cshtml" />
+    <Content Include="Views\Feedback\Comments.cshtml" />
+    <Content Include="Views\Feedback\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
