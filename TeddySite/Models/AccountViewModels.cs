@@ -48,10 +48,14 @@ namespace TeddySite.Models
 
     public class LoginViewModel
     {
+
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name ="Username")]
+        public string UserName { get; set; }
+        //[Required]
+        //[Display(Name = "Email")]
+        //[EmailAddress]
+        //public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -64,6 +68,10 @@ namespace TeddySite.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        [Display(Name ="UserName")]
+        public string UserName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -104,6 +112,10 @@ namespace TeddySite.Models
 
     public class ForgotPasswordViewModel
     {
+        [Required]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
