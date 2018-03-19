@@ -40,7 +40,7 @@ namespace TeddySite.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                entry.Username = User.Identity.Name.Substring(0, User.Identity.Name.IndexOf("@"));
+                entry.Username = User.Identity.Name;
             }
             entry.DateAdded = DateTime.Now;
             _db.Entries.Add(entry);
@@ -51,7 +51,7 @@ namespace TeddySite.Controllers
         public ActionResult Edit(int id)
         {
             var entry = _db.Entries.Find(id);
-            if (User.Identity.Name.Substring(0, User.Identity.Name.IndexOf("@")) == entry.Username)
+            if (User.Identity.Name == entry.Username)
             {
                 return View(entry);
             }
@@ -63,7 +63,7 @@ namespace TeddySite.Controllers
         public ActionResult Edit(FeedbackEntry entry)
         {
             var editEntry = _db.Entries.Find(entry.Id);
-            if (User.Identity.Name.Substring(0, User.Identity.Name.IndexOf("@")) == entry.Username)
+            if (User.Identity.Name == entry.Username)
             {
                 editEntry.Message = entry.Message;
                 _db.Entry(editEntry).State = EntityState.Modified;
@@ -91,7 +91,7 @@ namespace TeddySite.Controllers
         public ViewResult Show(int id)
         {
             var entry = _db.Entries.Find(id);
-            bool hasPermission = User.Identity.Name.Substring(0, User.Identity.Name.IndexOf("@")) == entry.Username;
+            bool hasPermission = User.Identity.Name == entry.Username;
             ViewData["hasPermission"] = hasPermission;
             return View(entry);
 
@@ -119,7 +119,7 @@ namespace TeddySite.Controllers
         public ActionResult Delete(int? id)
         {
             var entry = _db.Entries.Find(id);
-            if (User.Identity.Name.Substring(0, User.Identity.Name.IndexOf("@")) == entry.Username)
+            if (User.Identity.Name == entry.Username)
             {
                 return View(entry);
             }
@@ -134,7 +134,7 @@ namespace TeddySite.Controllers
         public ActionResult DeleteConfirmed(TeddySite.Models.FeedbackEntry entry)
         {
             var editEntry = _db.Entries.Find(entry.Id);
-            if (User.Identity.Name.Substring(0, User.Identity.Name.IndexOf("@")) == editEntry.Username)
+            if (User.Identity.Name == editEntry.Username)
             {
                 _db.Entries.Remove(editEntry);
                 _db.SaveChanges();
