@@ -90,9 +90,18 @@ namespace TeddySite.Controllers
         [AllowAnonymous]
         public ViewResult Show(int id)
         {
+
+            var userRecentEntries =
+           (from identry in _db.Entries
+            where identry.Id == id
+            orderby identry.DateAdded descending, identry.Username
+
+            select identry).Take(20);
+
             var entry = _db.Entries.Find(id);
             bool hasPermission = User.Identity.Name == entry.Username;
             ViewData["hasPermission"] = hasPermission;
+            ViewBag.userEntries = userRecentEntries;
             return View(entry);
 
         }

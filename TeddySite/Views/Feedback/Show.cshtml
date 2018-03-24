@@ -3,10 +3,33 @@
     ViewBag.Title = "Show";
 }
 
-<p>
-    @if (ViewBag.HasPermission)
+<div class="container">
+    <div style="text-align:center" class="col pt-4">
+        @*@foreach(var entry in ViewBag.userEntries)
+        {
+            <p> @entry.Message</p>
+        }*@
+
+        @foreach (var entry in ViewBag.userEntries)
     {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id})
+        <div class="col pt-4 pb-4">
+            <div id="inscomments">
+
+                <p>@entry.Message</p>
+
+                @if (!String.IsNullOrEmpty(User.Identity.Name))
+            {
+                if (entry.Username == User.Identity.Name)
+                {
+                    <a href="@Url.Action("Edit/" + entry.Id, "Feedback")"><button type="submit" class="btn btn-primary">Edit me</button></a>
+                //@Html.ActionLink("Delete", "Delete", new { id = entry.Id})
+                <a href="@Url.Action("Delete/"+entry.Id,"Feedback")"><button type="submit" class="btn btn-primary">Delete</button></a>
+        }
     }
-    @Html.ActionLink("Back to Entries", "Index")
-</p>
+            </div>
+        </div>
+}
+        <a href="@Url.Action("Index", "Feedback")"><button type="submit" class="btn btn-primary">Back to Entries</button></a>
+
+    </div>
+</div>

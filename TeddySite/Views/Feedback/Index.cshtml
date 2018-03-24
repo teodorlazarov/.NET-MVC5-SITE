@@ -3,7 +3,7 @@
 }
 
 <div class="container">
-    <div style="text-align:center" class="col pt-4">
+    <div style="text-align:center;" class="col pt-4">
         <a href="@Url.Action("Create","Feedback")">
             <button type="submit" class="btn btn-primary">Leave a comment</button>
         </a>
@@ -13,17 +13,16 @@
     {
         <div class="col pt-4 pb-4">
             <div id="inscomments">
-                @{
-                    string message = @entry.Message;
+
+
+
+                @{ string message = @entry.Message;
+
                     if (message.Length > 50)
                         message = message.Substring(0, 50);
                 }
 
-
-                <!--<p>@entry.Username posted on @entry.DateAdded.ToLongDateString() @entry.DateAdded.ToLongTimeString():</p>
-                <p>-@message</p>-->
-
-                <h3>@Html.ActionLink((string)entry.Message, "Show" + "/" + (string)entry.Id.ToString())</h3>
+                <h3>@Html.ActionLink((string)message, "Show" + "/" + (string)entry.Id.ToString())</h3>
                 <p>
                     Posted by @Html.ActionLink((string)entry.Username, "Comments" + "/" + (string)entry.Username) on @Html.ActionLink((string)entry.DateAdded.ToString(), "CommentsByDate", new { userDate = entry.DateAdded.ToString("dd-MM-yyyy") })
 
