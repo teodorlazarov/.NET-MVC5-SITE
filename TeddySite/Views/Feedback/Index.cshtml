@@ -22,14 +22,14 @@
                         message = message.Substring(0, 50);
                 }
 
-                <h3>@Html.ActionLink((string)message, "Show" + "/" + (string)entry.Id.ToString())</h3>
+                <h3 style="color: #0095da; font-weight: normal;">@Html.ActionLink((string)message, "Show" + "/" + (string)entry.Id.ToString())</h3>
                 <p>
                     Posted by @Html.ActionLink((string)entry.Username, "Comments" + "/" + (string)entry.Username) on @Html.ActionLink((string)entry.DateAdded.ToString(), "CommentsByDate", new { userDate = entry.DateAdded.ToString("dd-MM-yyyy") })
 
                 </p>
 
 
-                @if (!String.IsNullOrEmpty(User.Identity.Name))
+                @*@if (!String.IsNullOrEmpty(User.Identity.Name))
                 {
                     if (entry.Username == User.Identity.Name)
                     {
@@ -37,7 +37,7 @@
                         //@Html.ActionLink("Delete", "Delete", new { id = entry.Id})
                         <a href="@Url.Action("Delete/"+entry.Id,"Feedback")"><button type="submit" class="btn btn-primary">Delete</button></a>
                     }
-                }
+                }*@
             </div>
         </div>
     }
