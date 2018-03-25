@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Comments";
 }
 
@@ -20,7 +19,6 @@
                 </div>
             </div>
         }
-        <a href="@Url.Action("Index", "Feedback")"><button type="submit" class="btn btn-primary">Back to Entries</button></a>
-
+        <button class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Feedback")';return false;">Back to Entries</button>
     </div>
 </div>

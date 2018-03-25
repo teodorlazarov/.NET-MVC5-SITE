@@ -1,35 +1,28 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Show";
 }
 
 <div class="container">
     <div style="text-align:center" class="col pt-4">
-        @*@foreach(var entry in ViewBag.userEntries)
-        {
-            <p> @entry.Message</p>
-        }*@
-
         @foreach (var entry in ViewBag.userEntries)
-    {
-        <div class="col pt-4 pb-4">
-            <div id="inscomments">
+        {
+            <div class="col pt-4 pb-4">
+                <div id="inscomments">
 
-                <p>@entry.Message</p>
+                    <p>@entry.Message</p>
 
-                @if (!String.IsNullOrEmpty(User.Identity.Name))
-            {
-                if (entry.Username == User.Identity.Name)
-                {
-                    <a href="@Url.Action("Edit/" + entry.Id, "Feedback")"><button type="submit" class="btn btn-primary">Edit me</button></a>
-                //@Html.ActionLink("Delete", "Delete", new { id = entry.Id})
-                <a href="@Url.Action("Delete/"+entry.Id,"Feedback")"><button type="submit" class="btn btn-primary">Delete</button></a>
-        }
-    }
+                    @if (!String.IsNullOrEmpty(User.Identity.Name))
+                    {
+                        if (entry.Username == User.Identity.Name)
+                        {
+                            <button class="btn btn-primary" onclick="location.href='@Url.Action("Edit/" + entry.Id, "Feedback")';return false;">Edit me</button>
+                            <button class="btn btn-primary" onclick="location.href='@Url.Action("Delete/"+entry.Id,"Feedback")';return false;">Delete</button>
+
+                        }
+                    }
+                </div>
             </div>
-        </div>
-}
-        <a href="@Url.Action("Index", "Feedback")"><button type="submit" class="btn btn-primary">Back to Entries</button></a>
-
+        }
+        <button class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Feedback")';return false;">Back to Entries</button>
     </div>
 </div>

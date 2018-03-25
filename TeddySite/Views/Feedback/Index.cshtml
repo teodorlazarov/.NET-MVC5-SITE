@@ -3,41 +3,24 @@
 }
 
 <div class="container">
-    <div style="text-align:center;" class="col pt-4">
-        <a href="@Url.Action("Create","Feedback")">
-            <button type="submit" class="btn btn-primary">Leave a comment</button>
-        </a>
+    <div style="text-align:center;" class="col pt-4">  
+        <button class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Feedback")';return false;">Leave a comment</button>
     </div>
 
     @foreach (var entry in ViewBag.Entries)
     {
         <div class="col pt-4 pb-4">
             <div id="inscomments">
-
-
-
+                
                 @{ string message = @entry.Message;
 
                     if (message.Length > 50)
                         message = message.Substring(0, 50);
                 }
-
                 <h3 style="color: #0095da; font-weight: normal;">@Html.ActionLink((string)message, "Show" + "/" + (string)entry.Id.ToString())</h3>
                 <p>
                     Posted by @Html.ActionLink((string)entry.Username, "Comments" + "/" + (string)entry.Username) on @Html.ActionLink((string)entry.DateAdded.ToString(), "CommentsByDate", new { userDate = entry.DateAdded.ToString("dd-MM-yyyy") })
-
                 </p>
-
-
-                @*@if (!String.IsNullOrEmpty(User.Identity.Name))
-                {
-                    if (entry.Username == User.Identity.Name)
-                    {
-                        <a href="@Url.Action("Edit/" + entry.Id, "Feedback")"><button type="submit" class="btn btn-primary">Edit me</button></a>
-                        //@Html.ActionLink("Delete", "Delete", new { id = entry.Id})
-                        <a href="@Url.Action("Delete/"+entry.Id,"Feedback")"><button type="submit" class="btn btn-primary">Delete</button></a>
-                    }
-                }*@
             </div>
         </div>
     }

@@ -22,11 +22,10 @@ namespace TeddySite.Controllers
         {
             var mostRecentEntries =
             (from entry in _db.Entries
-             orderby entry.DateAdded descending, entry.Username
-
+             orderby entry.DateAdded descending, entry.Username    
              select entry).Take(20);
 
-            ViewBag.Entries = mostRecentEntries.ToList();
+            ViewBag.Entries = mostRecentEntries.ToList();       
             return View();
         }
 
@@ -48,8 +47,12 @@ namespace TeddySite.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
+            if(id == null)
+            {
+                return HttpNotFound();
+            }
             var entry = _db.Entries.Find(id);
             if (User.Identity.Name == entry.Username)
             {
@@ -101,9 +104,8 @@ namespace TeddySite.Controllers
             var entry = _db.Entries.Find(id);
             bool hasPermission = User.Identity.Name == entry.Username;
             ViewData["hasPermission"] = hasPermission;
-            ViewBag.userEntries = userRecentEntries;
+            ViewBag.userEntries = userRecentEntries;         
             return View(entry);
-
         }
 
         [AllowAnonymous]

@@ -7,20 +7,19 @@
         <h2 style="font-family: Roboto; color:#0095da; text-shadow: 1px 1px #0095da;">CommentsByDate</h2>
 
         @foreach (var entry in ViewBag.Entries)
-        {
-            <div class="col pt-4 pb-4">
-                <div id="inscomments">
+    {
+        <div class="col pt-4 pb-4">
+            <div id="inscomments">
 
-                    <header>
-                        <h3>@entry.Message</h3>
-                    </header>
-                    <p>
-                        Posted by @entry.Username on @entry.DateAdded.ToLongDateString()
-                    </p>
-                </div>
+                <header>
+                    <h3>@entry.Message</h3>
+                </header>
+                <p>
+                    Posted by @entry.Username on @entry.DateAdded.ToLongDateString()
+                </p>
             </div>
-        }
-        <a href="@Url.Action("Index", "Feedback")"><button type="submit" class="btn btn-primary">Back to Entries</button></a>
-
+        </div>
+}
+        <button class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Feedback")';return false;">Back to Entries</button>
     </div>
 </div>
