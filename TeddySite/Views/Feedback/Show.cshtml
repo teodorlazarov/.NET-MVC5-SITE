@@ -9,15 +9,16 @@
             <div class="col pt-4 pb-4">
                 <div id="inscomments">
 
-                    <p>@entry.Message</p>
+                    <p style="text-align:center;">@entry.Message</p>
 
                     @if (!String.IsNullOrEmpty(User.Identity.Name))
                     {
                         if (entry.Username == User.Identity.Name)
                         {
-                            <button class="btn btn-primary" onclick="location.href='@Url.Action("Edit/" + entry.Id, "Feedback")';return false;">Edit me</button>
-                            <button class="btn btn-primary" onclick="location.href='@Url.Action("Delete/"+entry.Id,"Feedback")';return false;">Delete</button>
-
+                            <div class="text-center">
+                                <button class="btn btn-primary" onclick="location.href='@Url.Action("Edit/" + entry.Id, "Feedback")';return false;">Edit me</button>
+                                <button class="btn btn-primary" onclick="location.href='@Url.Action("Delete/"+entry.Id,"Feedback")';return false;">Delete</button>
+                            </div>
                         }
                     }
                 </div>
