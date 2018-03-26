@@ -66,7 +66,7 @@ namespace TeddySite.Controllers
         public ActionResult Edit(FeedbackEntry entry)
         {
             var editEntry = _db.Entries.Find(entry.Id);
-            if (User.Identity.Name == entry.Username)
+            if (User.Identity.Name == editEntry.Username)
             {
                 editEntry.Message = entry.Message;
                 _db.Entry(editEntry).State = EntityState.Modified;
