@@ -12,9 +12,6 @@ namespace TeddySite.Controllers
     [Authorize]
     public class FeedbackController : Controller
     {
-        //
-        // GET: /Feedback/
-
         private FeedbackContext _db = new FeedbackContext();
 
         [AllowAnonymous]
@@ -22,10 +19,10 @@ namespace TeddySite.Controllers
         {
             var mostRecentEntries =
             (from entry in _db.Entries
-             orderby entry.DateAdded descending, entry.Username    
+             orderby entry.DateAdded descending, entry.Username
              select entry).Take(20);
 
-            ViewBag.Entries = mostRecentEntries.ToList();       
+            ViewBag.Entries = mostRecentEntries.ToList();
             return View();
         }
 
@@ -49,7 +46,7 @@ namespace TeddySite.Controllers
 
         public ActionResult Edit(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return HttpNotFound();
             }
@@ -93,7 +90,6 @@ namespace TeddySite.Controllers
         [AllowAnonymous]
         public ViewResult Show(int id)
         {
-
             var userRecentEntries =
            (from identry in _db.Entries
             where identry.Id == id
@@ -104,7 +100,7 @@ namespace TeddySite.Controllers
             var entry = _db.Entries.Find(id);
             bool hasPermission = User.Identity.Name == entry.Username;
             ViewData["hasPermission"] = hasPermission;
-            ViewBag.userEntries = userRecentEntries;         
+            ViewBag.userEntries = userRecentEntries;
             return View(entry);
         }
 

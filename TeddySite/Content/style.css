@@ -1,6 +1,6 @@
 @font-face{
-    font-family: Roboto;
-    src: url(fonts/RobotoThinItalic.ttf);
+    font-family: 'Roboto';
+    src: url('fonts/RobotoThinItalic.ttf') format('truetype');
 }
 
 body{
@@ -75,7 +75,6 @@ body{
    
     color: white;
     font-weight: bold;
-    min-height: 50px;
     min-height: 50px;
 }
 
