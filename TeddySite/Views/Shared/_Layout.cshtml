@@ -30,12 +30,7 @@
                     <a class="nav-item nav-link" href="@Url.Action("Index","Home")#gallery">Gallery</a>
                     <a class="nav-item nav-link" href="@Url.Action("Index", "Home")#download">Download</a>
                     <a class="@(ViewBag.Title == "FeedbackIndex" ? "active" : "") nav-item nav-link" href="@Url.Action("Index", "Feedback")">Feedback</a>
-
-
                 </div>
-
-
-
             </div>
             <div class="login order-1">
                 @Html.Partial("_LoginPartial")
