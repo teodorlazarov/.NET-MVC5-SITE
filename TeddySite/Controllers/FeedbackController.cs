@@ -51,7 +51,7 @@ namespace TeddySite.Controllers
                 return HttpNotFound();
             }
             var entry = _db.Entries.Find(id);
-            if (User.Identity.Name == entry.Username)
+            if (User.Identity.Name == entry.Username || User.IsInRole("Admin"))
             {
                 return View(entry);
             }
@@ -63,7 +63,7 @@ namespace TeddySite.Controllers
         public ActionResult Edit(FeedbackEntry entry)
         {
             var editEntry = _db.Entries.Find(entry.Id);
-            if (User.Identity.Name == editEntry.Username)
+            if (User.Identity.Name == editEntry.Username || User.IsInRole("Admin"))
             {
                 editEntry.Message = entry.Message;
                 _db.Entry(editEntry).State = EntityState.Modified;
@@ -126,7 +126,7 @@ namespace TeddySite.Controllers
         public ActionResult Delete(int? id)
         {
             var entry = _db.Entries.Find(id);
-            if (User.Identity.Name == entry.Username)
+            if (User.Identity.Name == entry.Username || User.IsInRole("Admin"))
             {
                 return View(entry);
             }
@@ -141,7 +141,7 @@ namespace TeddySite.Controllers
         public ActionResult DeleteConfirmed(TeddySite.Models.FeedbackEntry entry)
         {
             var editEntry = _db.Entries.Find(entry.Id);
-            if (User.Identity.Name == editEntry.Username)
+            if (User.Identity.Name == editEntry.Username ||User.IsInRole("Admin"))
             {
                 _db.Entries.Remove(editEntry);
                 _db.SaveChanges();
@@ -149,5 +149,16 @@ namespace TeddySite.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles ="Admin")]
+        public ActionResult Admin()
+        {
+            var mostRecentEntries =
+           (from entry in _db.Entries
+            orderby entry.DateAdded descending, entry.Username
+            select entry).Take(20);
+
+            ViewBag.Entries = mostRecentEntries.ToList();
+            return View();
+        }
     }
 }

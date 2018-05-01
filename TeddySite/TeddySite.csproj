@@ -205,6 +205,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-TeddySite-20180311022717.mdf" />
+    <Content Include="App_Data\aspnet-TeddySite-20180311022717_log.ldf">
+      <DependentUpon>aspnet-TeddySite-20180311022717.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\autobiography.jpg" />
@@ -280,10 +284,9 @@
     <Content Include="Views\Feedback\Delete.cshtml" />
     <Content Include="Views\Feedback\Comments.cshtml" />
     <Content Include="Views\Feedback\Show.cshtml" />
+    <Content Include="Views\Feedback\Admin.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>

@@ -153,6 +153,7 @@ namespace TeddySite.Controllers
             {
                 var user = new ApplicationUser { UserName = model.UserName/*.Split('@')[0]*/, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+                UserManager.AddToRole(user.Id, "User");
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
