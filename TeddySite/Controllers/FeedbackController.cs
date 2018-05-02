@@ -22,11 +22,30 @@ namespace TeddySite.Controllers
              orderby entry.DateAdded descending, entry.Username
              select entry).Take(20);
 
-            ViewBag.Entries = mostRecentEntries.ToList();
-            return View();
+            //ViewBag.Entries = mostRecentEntries.ToList();
+            return View(mostRecentEntries.ToList());
         }
 
-        public ActionResult Create()
+        [HttpPost]
+        public ActionResult Index(FeedbackEntry entry)
+        {
+            var mostRecentEntries =
+               (from entries in _db.Entries
+                orderby entries.DateAdded descending, entries.Username
+                select entries).Take(20);
+           
+                if (User.Identity.IsAuthenticated)
+                {
+                    entry.Username = User.Identity.Name;
+                }
+                entry.DateAdded = DateTime.Now;
+                _db.Entries.Add(entry);
+                _db.SaveChanges();
+
+            return PartialView("_AllComments",mostRecentEntries.ToList());
+        }
+
+        /*public ActionResult Create()
         {
             return View();
         }
@@ -42,7 +61,7 @@ namespace TeddySite.Controllers
             _db.Entries.Add(entry);
             _db.SaveChanges();
             return RedirectToAction("Index");
-        }
+        }*/
 
         public ActionResult Edit(int? id)
         {

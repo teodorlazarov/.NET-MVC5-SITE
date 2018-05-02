@@ -1,0 +1,39 @@
+﻿
+<head>
+    <title>Teddy's site</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/Content/style.css" />
+    <script src="script.js"></script>
+</head>
+
+<div class="container">
+   
+    <div id="allcomments">
+
+        @foreach (var item in Model)
+        {
+            <div class="col pt-4 pb-4">
+                <div id="inscomments">
+
+                    @{string message = item.Message;
+
+                        if (message.Length > 50)
+                        {
+                            message = message.Substring(0, 50);
+                        }
+                    }
+                    <h3 style="color: #0095da; font-weight: normal; text-align:center;">@Html.ActionLink((string)message, "Show" + "/" + (string)item.Id.ToString())</h3>
+                    <p style="text-align:right;">
+                        Posted by @Html.ActionLink((string)item.Username, "Comments" + "/" + (string)item.Username) on @Html.ActionLink((string)item.DateAdded.ToString(), "CommentsByDate", new { userDate = item.DateAdded.ToString("dd-MM-yyyy") })
+                    </p>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
