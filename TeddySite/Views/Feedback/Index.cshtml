@@ -4,78 +4,30 @@
     ViewBag.Title = "FeedbackIndex";
 }
 
-<script>
-    function RemoveOld() {
-        $('#allcomments').empty();
-    }
-</script>
 
 <div class="container">
     @if (User.IsInRole("Admin") || User.IsInRole("User"))
     {
+        { 
+            Html.EnableClientValidation();
+        }
         using (Ajax.BeginForm("Index", "Feedback", new AjaxOptions
         {
             InsertionMode = InsertionMode.Replace,
-            //OnSuccess = "RemoveOld",
             UpdateTargetId = "allcomments"
 
         }))
         {
+            @Html.ValidationSummary(true)
             <div class="form-group pt-4">
-                <label for="message">Message: </label>
-                <textarea style="min-height:50px; max-height: 200px;" name="Message" class="form-control" id="feedbackmessage" rows="3" required></textarea>
+                <label for="message">Message: </label>  
+                @Html.TextBoxFor(model=>model.FirstOrDefault().Message, new { style = "min-height:50px; max-height: 200px;", name = "Message", @class = "form-control", id = "feedbackmessage", rows = "3" })
+                @Html.ValidationMessageFor(model=>model.FirstOrDefault().Message,"",new {@class="text-danger" })
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-        }
-    }
-    @*@using (Ajax.BeginForm("Index", "Feedback", new AjaxOptions
-        {
-            InsertionMode = InsertionMode.InsertAfter,
-            UpdateTargetId = "allcomments",
-            LoadingElementId = "loader"
-        }))
-        {
-            <div class="form-group">
-                <label for="message">Message: </label>
-                <textarea style="min-height:50px; max-height: 200px;" name="Message" class="form-control" id="feedbackmessage" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        }*@
+                    }
+                }
+   
 
     @{Html.RenderPartial("_AllComments", Model);}
-    @*<div style="text-align:center" class="col pt-4">
-            @if (User.IsInRole("Admin") || User.IsInRole("User"))
-            {
-                using (Ajax.BeginForm("Index", "Feedback", new AjaxOptions
-                {
-                    HttpMethod = "POST",
-                    UpdateTargetId = "inscomments"
-                }))
-                {
-                    <div class="form-group">
-                        <label for="message">Message: </label>
-                        <textarea style="min-height:50px; max-height: 200px;" name="Message" class="form-control" id="feedbackmessage" rows="3" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                }
-            }
-        </div>
-        @foreach (var entry in ViewBag.Entries)
-        {
-            <div class="col pt-4 pb-4">
-                <div id="inscomments">
-
-                    @{ string message = @entry.Message;
-
-                        if (message.Length > 50)
-                            message = message.Substring(0, 50);
-                    }
-                    <h3 style="color: #0095da; font-weight: normal; text-align:center;">@Html.ActionLink((string)message, "Show" + "/" + (string)entry.Id.ToString())</h3>
-                    <p style="text-align:right;">
-                        Posted by @Html.ActionLink((string)entry.Username, "Comments" + "/" + (string)entry.Username) on @Html.ActionLink((string)entry.DateAdded.ToString(), "CommentsByDate", new { userDate = entry.DateAdded.ToString("dd-MM-yyyy") })
-                    </p>
-                </div>
-            </div>
-        }*@
-
 </div>

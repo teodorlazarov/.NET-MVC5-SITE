@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 
 using TeddySite.Models;
+using System.Net;
 
 namespace TeddySite.Controllers
 {
@@ -33,7 +34,15 @@ namespace TeddySite.Controllers
                (from entries in _db.Entries
                 orderby entries.DateAdded descending, entries.Username
                 select entries).Take(20);
-           
+
+            if (string.IsNullOrEmpty(entry.Message) || entry.Message.Length < 4)
+            {
+                ModelState.AddModelError("Message", "Comment is below 4 characters!");
+                //return View(mostRecentEntries.ToList());
+            }
+
+            if (ModelState.IsValid)
+            {
                 if (User.Identity.IsAuthenticated)
                 {
                     entry.Username = User.Identity.Name;
@@ -41,8 +50,12 @@ namespace TeddySite.Controllers
                 entry.DateAdded = DateTime.Now;
                 _db.Entries.Add(entry);
                 _db.SaveChanges();
-
-            return PartialView("_AllComments",mostRecentEntries.ToList());
+                return PartialView("_AllComments", mostRecentEntries.ToList());
+            }
+            else
+            {
+                return View(mostRecentEntries.ToList());
+            }
         }
 
         /*public ActionResult Create()
@@ -144,6 +157,10 @@ namespace TeddySite.Controllers
 
         public ActionResult Delete(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             var entry = _db.Entries.Find(id);
             if (User.Identity.Name == entry.Username || User.IsInRole("Admin"))
             {
@@ -155,20 +172,52 @@ namespace TeddySite.Controllers
             }
         }
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(TeddySite.Models.FeedbackEntry entry)
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(/*TeddySite.Models.FeedbackEntry entry*/ int id)
+        //{
+        //    var editEntry = _db.Entries.Find(/*entry.Id*/ id);
+        //    if (User.Identity.Name == editEntry.Username ||User.IsInRole("Admin"))
+        //    {
+        //        _db.Entries.Remove(editEntry);
+        //        _db.SaveChanges();
+        //    }
+        //    if (User.IsInRole("Admin"))
+        //    {
+        //        return RedirectToAction("Admin");
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+        //}
+
+        [HttpPost]
+        [ActionName("DeleteEntry")]
+        public ActionResult DelEntry(int id)
         {
-            var editEntry = _db.Entries.Find(entry.Id);
-            if (User.Identity.Name == editEntry.Username ||User.IsInRole("Admin"))
+            System.Diagnostics.Debug.WriteLine(id);
+            var delEntry = _db.Entries.Find(id);
+            if (User.Identity.Name == delEntry.Username || User.IsInRole("Admin"))
             {
-                _db.Entries.Remove(editEntry);
+                _db.Entries.Remove(delEntry);
                 _db.SaveChanges();
             }
-            return RedirectToAction("Index");
+            if (User.IsInRole("Admin"))
+            {
+                var mostRecentEntries =
+                    (from entry in _db.Entries
+                     orderby entry.DateAdded descending, entry.Username
+                     select entry).Take(20);
+                return PartialView("_AdminView", mostRecentEntries.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Admin()
         {
             var mostRecentEntries =
@@ -177,7 +226,7 @@ namespace TeddySite.Controllers
             select entry).Take(20);
 
             ViewBag.Entries = mostRecentEntries.ToList();
-            return View();
+            return View(mostRecentEntries.ToList());
         }
     }
 }

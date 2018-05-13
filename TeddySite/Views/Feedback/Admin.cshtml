@@ -1,25 +1,8 @@
-﻿
+﻿@model IEnumerable<TeddySite.Models.FeedbackEntry>
+
 @{
     ViewBag.Title = "Admin";
 }
 
-<div class="container">
-    @foreach (var entry in ViewBag.Entries)
-    {
-        <div class="col pt-4 pb-4">
-            <div id="inscomments">
-
-                <p style="text-align:center;">@entry.Message</p>
-                <div class="text-center">
-                    <button class="btn btn-primary" onclick="location.href='@Url.Action("Edit/" + entry.Id, "Feedback")';return false;">Edit me</button>
-                    <button class="btn btn-primary" onclick="location.href='@Url.Action("Delete/"+entry.Id,"Feedback")';return false;">Delete</button>
-                </div>
-                <p style="text-align:right;">
-                    Posted by @Html.ActionLink((string)entry.Username, "Comments" + "/" + (string)entry.Username) on @Html.ActionLink((string)entry.DateAdded.ToString(), "CommentsByDate", new { userDate = entry.DateAdded.ToString("dd-MM-yyyy") })
-                </p>
-            </div>
-        </div>
-    }
-
-</div>
+@{Html.RenderPartial("_AdminView", Model);}
 

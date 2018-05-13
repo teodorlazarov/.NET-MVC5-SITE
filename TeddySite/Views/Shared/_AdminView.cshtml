@@ -1,0 +1,44 @@
+﻿<head>
+    <title>Teddy's site</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/Content/style.css" />
+</head>
+
+<div class="container">
+    <div id="admincomments">
+        @foreach (var entry in Model)
+        {
+            <div class="col pt-4 pb-4">
+                <div id="inscomments">
+
+                    <p style="text-align:center;">@entry.Message</p>
+                    <div class="text-center">
+                        <button class="btn btn-primary" onclick="location.href='@Url.Action("Edit/" + entry.Id, "Feedback")';return false;">Edit me</button>
+                        @*<button class="btn btn-primary" onclick="location.href='@Url.Action("Delete/"+entry.Id,"Feedback")';return false;">Delete</button>*@
+                        @Ajax.ActionLink("Delete", "DeleteEntry", new { id = entry.Id },
+                             new AjaxOptions
+                             {
+                                 HttpMethod = "Post",
+                                 Confirm = "Are you sure you want to delete " + entry.Username +"'s message?",
+                                 UpdateTargetId = "admincomments",
+                                 InsertionMode = InsertionMode.Replace
+
+
+                             },
+                            new { @class = "btn btn-danger glyphicon glyphicon-trash" })
+
+                    </div>
+                    <p style="text-align:right;">
+                        Posted by @Html.ActionLink((string)entry.Username, "Comments" + "/" + (string)entry.Username) on @Html.ActionLink((string)entry.DateAdded.ToString(), "CommentsByDate", new { userDate = entry.DateAdded.ToString("dd-MM-yyyy") })
+                    </p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
