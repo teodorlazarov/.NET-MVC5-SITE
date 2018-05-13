@@ -23,7 +23,7 @@ namespace TeddySite.Controllers
              orderby entry.DateAdded descending, entry.Username
              select entry).Take(20);
 
-            //ViewBag.Entries = mostRecentEntries.ToList();
+            ModelState.Clear();
             return View(mostRecentEntries.ToList());
         }
 
@@ -171,26 +171,6 @@ namespace TeddySite.Controllers
                 return RedirectToAction("Index");
             }
         }
-
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(/*TeddySite.Models.FeedbackEntry entry*/ int id)
-        //{
-        //    var editEntry = _db.Entries.Find(/*entry.Id*/ id);
-        //    if (User.Identity.Name == editEntry.Username ||User.IsInRole("Admin"))
-        //    {
-        //        _db.Entries.Remove(editEntry);
-        //        _db.SaveChanges();
-        //    }
-        //    if (User.IsInRole("Admin"))
-        //    {
-        //        return RedirectToAction("Admin");
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
-        //}
 
         [HttpPost]
         [ActionName("DeleteEntry")]

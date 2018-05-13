@@ -8,21 +8,22 @@
 <div class="container">
     @if (User.IsInRole("Admin") || User.IsInRole("User"))
     {
-        { 
-            Html.EnableClientValidation();
-        }
+        
+        Html.EnableClientValidation();
+        
         using (Ajax.BeginForm("Index", "Feedback", new AjaxOptions
         {
             InsertionMode = InsertionMode.Replace,
-            UpdateTargetId = "allcomments"
+            UpdateTargetId = "allcomments",
+            OnBegin = "resetTextBox"
 
         }))
         {
             @Html.ValidationSummary(true)
             <div class="form-group pt-4">
                 <label for="message">Message: </label>  
-                @Html.TextBoxFor(model=>model.FirstOrDefault().Message, new { style = "min-height:50px; max-height: 200px;", name = "Message", @class = "form-control", id = "feedbackmessage", rows = "3" })
-                @Html.ValidationMessageFor(model=>model.FirstOrDefault().Message,"",new {@class="text-danger" })
+                @Html.TextBoxFor(m=>m.FirstOrDefault().Message, new {@Value="", style = "min-height:50px; max-height: 200px;", name = "Message", @class = "form-control", id = "feedbackmessage", rows = "3" })
+                @Html.ValidationMessageFor(m=>m.FirstOrDefault().Message,"",new {@class="text-danger" })
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
                     }
@@ -31,3 +32,9 @@
 
     @{Html.RenderPartial("_AllComments", Model);}
 </div>
+
+<script>
+    function resetTextBox() {
+        $("#feedbackmessage").val("");
+    }
+</script>
