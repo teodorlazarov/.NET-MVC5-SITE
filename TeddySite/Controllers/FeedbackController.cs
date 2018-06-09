@@ -38,7 +38,6 @@ namespace TeddySite.Controllers
             if (string.IsNullOrEmpty(entry.Message) || entry.Message.Length < 4)
             {
                 ModelState.AddModelError("Message", "Comment is below 4 characters!");
-                //return View(mostRecentEntries.ToList());
             }
 
             if (ModelState.IsValid)
@@ -57,24 +56,6 @@ namespace TeddySite.Controllers
                 return View(mostRecentEntries.ToList());
             }
         }
-
-        /*public ActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Create(FeedbackEntry entry)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                entry.Username = User.Identity.Name;
-            }
-            entry.DateAdded = DateTime.Now;
-            _db.Entries.Add(entry);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
-        }*/
 
         public ActionResult Edit(int? id)
         {

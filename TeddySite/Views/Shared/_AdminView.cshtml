@@ -19,7 +19,6 @@
                     <p style="text-align:center;">@entry.Message</p>
                     <div class="text-center">
                         <button class="btn btn-primary" onclick="location.href='@Url.Action("Edit/" + entry.Id, "Feedback")';return false;">Edit me</button>
-                        @*<button class="btn btn-primary" onclick="location.href='@Url.Action("Delete/"+entry.Id,"Feedback")';return false;">Delete</button>*@
                         @Ajax.ActionLink("Delete", "DeleteEntry", new { id = entry.Id },
                              new AjaxOptions
                              {
